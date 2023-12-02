@@ -2,4 +2,4 @@ npm install cheerio axios
 
 
 
-rodar = node scrapePDFs.js
+rodar = node .\scrapePDFs.js
