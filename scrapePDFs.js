@@ -9,7 +9,7 @@ async function scrapePDFLinks() {
     await page.goto('https://ru.unb.br/index.php/cardapio-refeitorio');
 
     const pdfLinks = await page.evaluate(() => {
-      // Use os seletores fornecidos para encontrar os links intermediários para as páginas dos PDFs
+      
       const intermediateLinks = [
         "#content > div.item-page > div:nth-child(3) > div:nth-child(6) > a",
         "#content > div.item-page > div:nth-child(3) > div:nth-child(11) > a",
