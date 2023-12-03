@@ -5,11 +5,9 @@ async function scrapePDFLinks() {
   const page = await browser.newPage();
 
   try {
-    // Abre a página desejada
     await page.goto('https://ru.unb.br/index.php/cardapio-refeitorio');
 
     const pdfLinks = await page.evaluate(() => {
-      
       const intermediateLinks = [
         "#content > div.item-page > div:nth-child(3) > div:nth-child(6) > a",
         "#content > div.item-page > div:nth-child(3) > div:nth-child(11) > a",
@@ -18,7 +16,6 @@ async function scrapePDFLinks() {
         "#content > div.item-page > div:nth-child(3) > div:nth-child(19) > a"
       ];
 
-      // Função para extrair o link do PDF a partir de uma página intermediária
       function extractPDFLink(linkSelector) {
         const link = document.querySelector(linkSelector);
         if (link) {
@@ -27,13 +24,12 @@ async function scrapePDFLinks() {
         return null;
       }
 
-      // Navega para cada página intermediária e extrai o link direto para o PDF
       const hrefs = intermediateLinks.map(link => extractPDFLink(link));
       return hrefs;
     });
 
     console.log('Links diretos para os PDFs:');
-    console.log(pdfLinks.filter(link => link !== null)); // Exibe os links encontrados
+    console.log(pdfLinks.filter(link => link !== null));
   } catch (error) {
     console.error('Ocorreu um erro:', error);
   } finally {
@@ -41,5 +37,18 @@ async function scrapePDFLinks() {
   }
 }
 
-// Chamada da função para iniciar o scraping
-scrapePDFLinks();
+// Iniciar o scraping após 30 segundos
+setTimeout(async () => {
+  await scrapePDFLinks();
+}, 30000); // 30 segundos (30000 milissegundos)
+
+
+
+
+//Agendar a execução do scraping para todas as segundas às 2h
+//cron.schedule('0 2 * * 1', async () => {
+//  console.log('Iniciando o scraping...');
+//  await scrapePDFLinks();
+//}, {
+//  timezone: 'America/Sao_Paulo' // Defina o fuso horário desejado
+//});
